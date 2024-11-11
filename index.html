@@ -6,69 +6,200 @@
     <title>代码学习导航</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 动画库 -->
-    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <!-- 图标库 -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- 自定义字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        .link-card {
-            transition: all 0.3s ease;
+        * {
+            font-family: 'Poppins', sans-serif;
         }
-        .link-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .green-gradient {
-            background: linear-gradient(135deg, #42b883 0%, #42b883 100%);
+
+        .card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(66, 184, 131, 0.2) 0%, rgba(66, 184, 131, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #42b883 0%, #2f495e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .animated-background {
+            background: linear-gradient(-45deg, #42b88333, #2f495e33, #42b88322, #2f495e22);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hover-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hover-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #42b883;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .hover-link:hover::after {
+            transform-origin: bottom left;
+            transform: scaleX(1);
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-16">
-        <!-- 标题部分 -->
-        <div class="text-center mb-16 animate__animated animate__fadeIn">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                <i class="ri-code-box-line mr-2"></i>代码学习
-            </h1>
-            <p class="text-gray-600">探索编程的无限可能</p>
+<body class="animated-background min-h-screen">
+    <div class="relative">
+        <!-- 装饰背景元素 -->
+        <div class="fixed top-0 left-0 w-full h-full pointer-events-none">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+            <div class="absolute top-40 right-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-20 left-1/2 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
 
-        <!-- 链接卡片网格 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 前端开发 -->
-            <div class="link-card bg-white rounded-xl p-6 animate__animated animate__fadeInUp">
-                <div class="green-gradient w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <i class="ri-html5-line text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">前端开发</h3>
-                <a href="#" class="text-green-600 hover:text-green-700 block mb-2">HTML/CSS 基础</a>
-                <a href="#" class="text-green-600 hover:text-green-700 block mb-2">JavaScript 进阶</a>
-                <a href="#" class="text-green-600 hover:text-green-700 block">Vue.js 框架</a>
+        <div class="container mx-auto px-4 py-16 relative z-10">
+            <!-- 标题部分 -->
+            <div class="text-center mb-20">
+                <h1 class="text-6xl font-bold gradient-text mb-6">代码学习导航</h1>
+                <p class="text-xl text-gray-600 glass-effect inline-block px-6 py-2 rounded-full">探索编程的无限可能</p>
             </div>
 
-            <!-- 后端开发 -->
-            <div class="link-card bg-white rounded-xl p-6 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
-                <div class="green-gradient w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <i class="ri-server-line text-white text-2xl"></i>
+            <!-- 链接卡片网格 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 前端开发 -->
+                <div class="card glass-effect rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg">
+                            <i class="ri-code-line text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold ml-4 text-gray-800">前端开发</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">HTML5/CSS3 精通之路</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">JavaScript 高级编程</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">Vue.js 实战开发</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">后端开发</h3>
-                <a href="#" class="text-green-600 hover:text-green-700 block mb-2">Python 教程</a>
-                <a href="#" class="text-green-600 hover:text-green-700 block mb-2">Java 核心</a>
-                <a href="#" class="text-green-600 hover:text-green-700 block">Node.js</a>
-            </div>
 
-            <!-- 数据库 -->
-            <div class="link-card bg-white rounded-xl p-6 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-                <div class="green-gradient w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                    <i class="ri-database-2-line text-white text-2xl"></i>
+                <!-- 后端开发 -->
+                <div class="card glass-effect rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
+                            <i class="ri-server-line text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold ml-4 text-gray-800">后端开发</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">Python 全栈工程师</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">Java 企业级开发</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">Node.js 服务端开发</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-2">数据库</h3>
-                <a href="#" class="text-green-600 hover:text-green-700 block mb-2">MySQL 基础</a>
-                <a href="#" class="text-green-600 hover:text-green-700 block mb-2">MongoDB 入门</a>
-                <a href="#" class="text-green-600 hover:text-green-700 block">Redis 实践</a>
+
+                <!-- 云原生 -->
+                <div class="card glass-effect rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
+                            <i class="ri-cloud-line text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold ml-4 text-gray-800">云原生</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">Docker 容器化部署</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">Kubernetes 集群管理</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="hover-link text-lg text-gray-700 flex items-center group">
+                            <span class="mr-2">微服务架构实践</span>
+                            <i class="ri-arrow-right-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // GSAP 动画
+        gsap.from(".card", {
+            duration: 1,
+            y: 60,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+    </script>
 </body>
 </html>
