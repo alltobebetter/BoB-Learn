@@ -1,0 +1,7 @@
+providers:
+  - provider: openai
+    base_url: https://api.gptgod.online
+    api: sk-JH2dm2RawXYWiDhNzOAAfnWVVOkKOuDeHfxi9LUcbUIkzL6j
+
+api_keys:
+  - api: sk-1145141919810
